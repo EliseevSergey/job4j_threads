@@ -7,5 +7,6 @@ ReadMe must be bigger.
 ReadMe must be bigger.
 ReadMe must be bigger.
 
-Keep killing .idea folder.
+removed .idea folder.
+removed target
 task_124176
