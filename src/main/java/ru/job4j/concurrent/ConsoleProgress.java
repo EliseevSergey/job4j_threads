@@ -23,7 +23,7 @@ public class ConsoleProgress implements Runnable {
     public static void main(String[] args) throws InterruptedException {
         Thread progress = new Thread(new ConsoleProgress());
         progress.start();
-        Thread.sleep(15000);
+        Thread.sleep(14000);
         progress.interrupt();
     }
 }
