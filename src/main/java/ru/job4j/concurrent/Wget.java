@@ -5,11 +5,9 @@ public class Wget {
         Thread thread = new Thread(
                 () -> {
                     try {
-                        int i = 0;
-                        while (i <= 100) {
+                        for (int i = 0; i <= 100; i++) {
                             System.out.print("\rLoading : " + i + "%");
                             Thread.sleep(500);
-                            i++;
                         }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
