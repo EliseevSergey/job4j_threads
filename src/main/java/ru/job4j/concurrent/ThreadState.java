@@ -22,11 +22,9 @@ public class ThreadState {
             System.out.printf("Thread name: %s, thread status: %s %n", second.getName(), second.getState());
         }
 
-        if (first.getState() == Thread.State.TERMINATED && second.getState() == Thread.State.TERMINATED) {
-            System.out.println("Both status before close:");
-            System.out.printf("Thread name: %s, thread status: %s %n", first.getName(), first.getState());
-            System.out.printf("Thread name: %s, thread status: %s %n", second.getName(), second.getState());
-            System.out.println("Main is allowed to say Bye Bye");
-        }
+        System.out.println("Both status before close:");
+        System.out.printf("Thread name: %s, thread status: %s %n", first.getName(), first.getState());
+        System.out.printf("Thread name: %s, thread status: %s %n", second.getName(), second.getState());
+        System.out.println("Main is allowed to say Bye Bye");
     }
 }
