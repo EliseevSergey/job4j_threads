@@ -1,4 +1,4 @@
-package ru.job4j.concurrent;
+package ru.job4j.concurrent.demo;
 
 public class WgetBase {
     public static void main(String[] args) {
