@@ -25,16 +25,20 @@ public class Wget implements Runnable {
              var out = new FileOutputStream(file)) {
             System.out.println("Open connection: " + (System.currentTimeMillis() - startAt) + " ms");
             int bytesTotal = 0;
-            int b;
+            int byteValue;
             var downloadAt = System.nanoTime();
 
-            while ((b = in.read()) != -1) {
+            while ((byteValue = in.read()) != -1) {
+                /**
+                 bytesTotal += byteValue; не работает
+                 bytesTotal это счётчик байтов прочитанных, а byteValue это int представление прочитанного байта,
+                 какой-то странный счётчик получается.
+                 */
                 bytesTotal++;
-                out.write((byte) b);
+                out.write((byte) byteValue);
                 if (bytesTotal == speed) {
                     long actualTime = (System.nanoTime() - downloadAt) / 1000000;
                     System.out.printf("Read %s bytes. Time to download %s mls %n", bytesTotal, actualTime);
-                    bytesTotal = 0;
                     if (actualTime < 1000) {
                         long sleepTime = 1000 - actualTime;
                         try {
@@ -43,8 +47,9 @@ public class Wget implements Runnable {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        downloadAt = System.nanoTime();
                     }
+                    bytesTotal = 0;
+                    downloadAt = System.nanoTime();
                 }
             }
             System.out.printf("Total file download size: %s byte", Files.size(file.toPath()));
@@ -57,7 +62,7 @@ public class Wget implements Runnable {
         }
     }
 
-        public static void validation(String[] args) {
+    public static void validation(String[] args) {
         if (args.length != 3) {
             throw new IllegalArgumentException("Not enough arguments");
         }
@@ -66,11 +71,11 @@ public class Wget implements Runnable {
         int speed = Integer.parseInt(args[1]);
         if (Integer.parseInt(args[1]) <= 0) {
             throw new IllegalArgumentException(String.format("Speed is wrong %s ", speed));
-            }
+        }
         Path path = Path.of(args[2]);
-            if (!path.toFile().exists()) {
-                throw new IllegalArgumentException(String.format("File [%s] not exist ", path));
-            }
+        if (!path.toFile().exists()) {
+            throw new IllegalArgumentException(String.format("File [%s] not exist ", path));
+        }
     }
 
     public static void main(String[] args) throws InterruptedException {
