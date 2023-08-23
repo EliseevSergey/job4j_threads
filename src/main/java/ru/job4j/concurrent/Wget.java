@@ -19,25 +19,21 @@ public class Wget implements Runnable {
 
     @Override
     public void run() {
-        var startAt = System.currentTimeMillis();
         var file = new File(path);
+        var startAt = System.currentTimeMillis();
         try (var in = new URL(url).openStream();
              var out = new FileOutputStream(file)) {
             System.out.println("Open connection: " + (System.currentTimeMillis() - startAt) + " ms");
+            var dataBuffer = new byte[speed];
             int bytesTotal = 0;
-            int byteValue;
+            int byteReadQty;
             var downloadAt = System.nanoTime();
-            while ((byteValue = in.read()) != -1) {
-                /**
-                 bytesTotal += byteValue; не работает
-                 bytesTotal это счётчик байтов прочитанных, а byteValue это int представление прочитанного байта,
-                 какой-то странный счётчик получается.
-                 */
-                bytesTotal++;
-                out.write((byte) byteValue);
-                if (bytesTotal == speed) {
+            while ((byteReadQty = in.read(dataBuffer)) != -1) {
+                bytesTotal += byteReadQty;
+                out.write(dataBuffer);
+                if (bytesTotal >= speed) {
                     long actualTime = (System.nanoTime() - downloadAt) / 1000000;
-                    System.out.printf("Read %s bytes. Time to download %s mls %n", bytesTotal, actualTime);
+                    System.out.printf("Total bytes read %s. Read %s bytes for session. Time to download session %s mls %n", bytesTotal, byteReadQty, actualTime);
                     if (actualTime < 1000) {
                         long sleepTime = 1000 - actualTime;
                         try {
