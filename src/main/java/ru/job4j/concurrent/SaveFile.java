@@ -11,8 +11,8 @@ public final class SaveFile {
 
     public synchronized void saveContent(String content) {
         try (FileWriter fw = new FileWriter(file);
-        BufferedWriter bw = new BufferedWriter(fw)) {
-                bw.write(content);
+             BufferedWriter bw = new BufferedWriter(fw)) {
+            bw.write(content);
         } catch (IOException e) {
             e.printStackTrace();
         }

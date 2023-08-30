@@ -10,12 +10,12 @@ public final class ParseFile {
         this.file = file;
     }
 
-    public synchronized String content(Predicate<Character> filter) {
+    private synchronized String content(Predicate<Character> filter) {
         StringBuilder sb = new StringBuilder();
         try (FileInputStream in = new FileInputStream(file);
              BufferedInputStream bis = new BufferedInputStream(in)) {
             int simbol;
-            while ((simbol = bis.read()) > 0) {
+            while ((simbol = bis.read()) != -1) {
                 if (filter.test((char) simbol)) {
                     sb.append(simbol);
                 }
@@ -24,5 +24,13 @@ public final class ParseFile {
             e.printStackTrace();
         }
         return sb.toString();
+    }
+
+    public synchronized String getWholeContent() {
+        return content(s -> true);
+    }
+
+    public synchronized String getContentWithoutUnicode() {
+        return content(s -> s < 0x80);
     }
 }
