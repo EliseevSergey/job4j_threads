@@ -2,6 +2,8 @@ package ru.job4j.concurrent.cash;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class AccountStorageTest {
@@ -29,8 +31,7 @@ class AccountStorageTest {
         var storage = new AccountStorage();
         storage.add(new Account(1, 100));
         storage.delete(1);
-        Throwable exception = assertThrows(IllegalArgumentException.class, () -> storage.getById(1));
-        assertEquals("Not found account by id = 1", exception.getMessage());
+        assertEquals(Optional.empty(), storage.getById(1));
     }
 
     @Test
@@ -43,15 +44,16 @@ class AccountStorageTest {
                 .orElseThrow(() -> new IllegalStateException("Not found account by id = 1"));
         var secondAccount = storage.getById(2)
                 .orElseThrow(() -> new IllegalStateException("Not found account by id = 1"));
-        assertEquals(firstAccount.amount(), 0);
-        assertEquals(secondAccount.amount(), 200);
+        assertEquals(0, firstAccount.amount());
+        assertEquals(200, secondAccount.amount());
     }
 
     @Test
     void whenThrow() {
         AccountStorage storage = new AccountStorage();
         storage.add(new Account(1, 100));
-        Throwable exception = assertThrows(IllegalArgumentException.class, () -> storage.delete(666));
-        assertEquals("Account with id 666 is not in storage", exception.getMessage());
+        storage.add(new Account(2, 100));
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> storage.transfer(1, 2, 101));
+        assertEquals("Sender's balance is less than amount", exception.getMessage());
     }
 }
