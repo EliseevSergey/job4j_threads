@@ -3,16 +3,17 @@ package ru.job4j.net;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 
 public class FileDownload {
     public static void main(String[] args) throws Exception {
         var startAt = System.currentTimeMillis();
-        var file = new File("./data/tmp1.txt");
+        File file = new File("./data/tmp1.txt");
         String url = "https://www.google.com/";
-        try (var in = new URL(url).openStream();
-             var out = new FileOutputStream(file)) {
+        try (InputStream in = new URL(url).openStream();
+             FileOutputStream out = new FileOutputStream(file)) {
             System.out.println("Open connection: " + (System.currentTimeMillis() - startAt) + " ms");
             var dataBuffer = new byte[512];
             int bytesRead;
