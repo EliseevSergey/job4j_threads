@@ -15,7 +15,7 @@ public class ThreadSleep {
         );
 
         thread.start();
-        System.out.println(thread.getState());
+        System.out.printf("Thread name %s. Thread state %s %n", Thread.currentThread().getName(), Thread.currentThread().getState());
         System.out.println("Main");
         System.out.println(thread.getState());
     }
