@@ -31,8 +31,6 @@ class SingleLockListTest {
         second.join();
         Set<Integer> rsl = new TreeSet<>();
         list.iterator().forEachRemaining(rsl::add);
-        //assertThat(rsl).hasSize(2).containsAll(Set.of(1, 2));
         assertEquals(Set.of(1, 2), rsl);
     }
-
 }
