@@ -8,7 +8,7 @@ import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 
 @ThreadSafe
-public class SingleLockList <T> implements Iterable<T> {
+public class SingleLockList<T> implements Iterable<T> {
     @GuardedBy("this")
     private final List<T> list;
 
@@ -29,7 +29,7 @@ public class SingleLockList <T> implements Iterable<T> {
         return copy(list).listIterator();
     }
 
-    private synchronized List<T> copy(List<T> origin){
+    private synchronized List<T> copy(List<T> origin) {
         return new ArrayList<>(origin);
     }
 }
