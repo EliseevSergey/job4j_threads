@@ -15,6 +15,7 @@ public class Deadlock {
                     throw new RuntimeException(e);
                 }
                 synchronized (lock2) {
+                    System.out.println("AAA dead");
                 }
             }
             System.out.println(Thread.currentThread().getName() + " end");
@@ -23,7 +24,9 @@ public class Deadlock {
         Thread thread2 = new Thread(() -> {
             System.out.println(Thread.currentThread().getName() + " start");
             synchronized (lock2) {
+                System.out.println("AAA dead");
                 synchronized (lock1) {
+                    System.out.println("AAA dead");
                 }
             }
             System.out.println(Thread.currentThread().getName() + " end");
