@@ -20,13 +20,10 @@ public class SimpleBlockingQueue<T> {
         synchronized (queue) {
             while (queue.size() == capacity) {
                 queue.wait();
-                System.out.println("No space");
             }
             queue.add(value);
-            System.out.println("Add has been done");
-            if (queue.size() < capacity) {
+            if (queue.size() == 0) {
                 queue.notifyAll();
-                System.out.println("Free space is available");
             }
         }
     }
@@ -36,11 +33,9 @@ public class SimpleBlockingQueue<T> {
         synchronized (queue) {
             while (queue.isEmpty()) {
                 queue.wait();
-                System.out.println("Nothing to poll");
             }
             rsl = queue.poll();
                 queue.notifyAll();
-            System.out.println("Poll has been done");
             }
         return rsl;
     }
