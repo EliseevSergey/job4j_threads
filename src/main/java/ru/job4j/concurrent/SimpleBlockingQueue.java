@@ -22,9 +22,7 @@ public class SimpleBlockingQueue<T> {
                 queue.wait();
             }
             queue.add(value);
-            if (queue.size() == 0) {
-                queue.notifyAll();
-            }
+            queue.notifyAll();
         }
     }
 
