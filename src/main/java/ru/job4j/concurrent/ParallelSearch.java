@@ -17,7 +17,11 @@ public class ParallelSearch {
         Thread producer = new Thread(
                 () -> {
                     for (int index = 0; index != 11; index++) {
-                        queue.offer(index);
+                        try {
+                            queue.offer(index);
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                        }
                         try {
                             Thread.sleep(500);
                         } catch (InterruptedException e) {

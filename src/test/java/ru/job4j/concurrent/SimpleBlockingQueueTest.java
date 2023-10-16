@@ -3,7 +3,7 @@ package ru.job4j.concurrent;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.stream.IntStream;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SimpleBlockingQueueTest {
@@ -13,9 +13,13 @@ class SimpleBlockingQueueTest {
         final SimpleBlockingQueue<Integer> sbq = new SimpleBlockingQueue<>(2);
         Thread producer = new Thread(
                 () -> {
-                    IntStream.range(0, 5).forEach(
-                            sbq::offer
-                    );
+                    for (int i = 0; i < 5; i++) {
+                        try {
+                            sbq.offer(i);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
         );
         producer.start();
