@@ -9,7 +9,7 @@ public class CASCount {
         Integer base;
         do {
             base = count.get();
-        } while (count.compareAndSet(base, count.incrementAndGet()));
+        } while (!count.compareAndSet(base, base + 1));
     }
 
     public int get() {
