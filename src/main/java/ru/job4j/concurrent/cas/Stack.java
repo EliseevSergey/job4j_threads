@@ -29,7 +29,6 @@ public class Stack<T> {
 
     private static final class Node<T> {
         private final T value;
-
         private Node<T> next;
 
         public Node(final T value) {
