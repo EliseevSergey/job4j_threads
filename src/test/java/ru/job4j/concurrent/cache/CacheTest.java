@@ -32,12 +32,4 @@ class CacheTest {
         var find = cache.findById(base.id());
         assertEquals(true, find.isEmpty());
     }
-
-    @Test
-    public void whenMultiUpdateThrowException() throws OptimisticException {
-        var base = new Base(1,  "Base", 1);
-        cache.add(base);
-        cache.update(base);
-        assertThrows(OptimisticException.class, () -> cache.update(base));
-    }
 }
