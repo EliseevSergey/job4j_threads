@@ -1,10 +1,8 @@
 package ru.job4j.concurrent.cache;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Stream;
 
 public class Cache {
     private final Map<Integer, Base> memory = new ConcurrentHashMap<>();
@@ -14,13 +12,13 @@ public class Cache {
     }
 
     public boolean update(Base in) {
-        return memory.computeIfPresent(in.id(), (k, b) -> {
-                    if (memory.get(in.id()).version() != in.version()) {
+        return memory.computeIfPresent(in.id(), (key, currentCacheBase) -> {
+                    if (currentCacheBase.version() != in.version()) {
                         throw new OptimisticException("Inputted model ver is not the same with cache version");
                     }
-                    delete(findById(in.id()).get());
-                    add(in);
-                    return memory.get(k);
+                    delete(currentCacheBase);
+                    add(new Base(key, in.name(), currentCacheBase.version() + 1));
+                    return memory.get(key);
                 }
         ) != null;
     }
@@ -30,8 +28,6 @@ public class Cache {
     }
 
     public Optional<Base> findById(int id) {
-        return Stream.of(memory.get(id))
-                .filter(Objects::nonNull)
-                .findFirst();
+        return Optional.ofNullable(memory.remove(id));
     }
 }
