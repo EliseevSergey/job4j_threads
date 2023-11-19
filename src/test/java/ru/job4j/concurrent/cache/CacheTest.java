@@ -1,12 +1,10 @@
 package ru.job4j.concurrent.cache;
 
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class CacheTest {
     private final Cache cache = new Cache();
-
 
     @Test
     public void whenAddFind() throws OptimisticException {

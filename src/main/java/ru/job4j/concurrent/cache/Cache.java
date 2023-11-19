@@ -16,9 +16,7 @@ public class Cache {
                     if (currentCacheBase.version() != in.version()) {
                         throw new OptimisticException("Inputted model ver is not the same with cache version");
                     }
-                    delete(currentCacheBase);
-                    add(new Base(key, in.name(), currentCacheBase.version() + 1));
-                    return memory.get(key);
+            return new Base(key, in.name(), currentCacheBase.version() + 1);
                 }
         ) != null;
     }
@@ -28,6 +26,6 @@ public class Cache {
     }
 
     public Optional<Base> findById(int id) {
-        return Optional.ofNullable(memory.remove(id));
+        return Optional.ofNullable(memory.get(id));
     }
 }
