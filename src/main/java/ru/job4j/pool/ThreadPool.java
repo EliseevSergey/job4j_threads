@@ -7,10 +7,10 @@ import java.util.List;
 
 public class ThreadPool {
     private final List<Thread> threads = new LinkedList<>();
-    private SimpleBlockingQueue<Runnable> tasks = new SimpleBlockingQueue<>(10);
+    private final SimpleBlockingQueue<Runnable> tasks = new SimpleBlockingQueue<>(10);
+    private final int threadCapacity = Runtime.getRuntime().availableProcessors();
 
     public ThreadPool() {
-        int threadCapacity = Runtime.getRuntime().availableProcessors();
         for (int i = 0; i <= threadCapacity; i++) {
             Thread thread = new Thread(() -> {
                 try {
