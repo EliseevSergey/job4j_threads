@@ -29,7 +29,6 @@ class SimpleBlockingQueueTest {
                         try {
                             buffer.add(sbq.poll());
                         } catch (InterruptedException e) {
-                            e.printStackTrace();
                             Thread.currentThread().interrupt();
                         }
                     }
