@@ -18,6 +18,7 @@ public class EmailNotification {
     }
 
     public synchronized void close() {
+        pool.shutdown();
         while (!pool.isTerminated()) {
             try {
                 Thread.sleep(100);
@@ -25,6 +26,5 @@ public class EmailNotification {
                 e.printStackTrace();
             }
         }
-        pool.shutdown();
     }
 }
