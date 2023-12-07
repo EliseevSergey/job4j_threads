@@ -19,23 +19,31 @@ public class ParallelSearch<T> extends RecursiveTask<Integer> {
     @Override
     protected Integer compute() {
         if (to - from < 10) {
-            return search(in, key);
+            return search(in, key, from, to);
         } else {
             if (from == in.length) {
                 return -1;
+            }
+            int mid = (from + to) / 2;
+            ParallelSearch<T> parallelSearchLeft = new ParallelSearch<>(in, key, from, mid);
+            ParallelSearch<T> parallelSearchRight = new ParallelSearch<>(in, key, mid + 1, to);
+            parallelSearchLeft.fork();
+            int rightResult = parallelSearchRight.compute();
+            int leftResult = parallelSearchLeft.join();
+            if (leftResult != -1) {
+                return leftResult;
             } else {
-                ParallelSearch<T> parallelSearch = new ParallelSearch<>(in, key, from + 1, to);
-                parallelSearch.fork();
-                return parallelSearch.join();
+                return rightResult;
             }
         }
     }
 
-    private int search(T[] array, T key) {
+    private int search(T[] array, T key, int from, int to) {
         int rsl = -1;
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] == key) {
+        for (int i = from; i <= to; i++) {
+            if (array[i].equals(key)) {
                 rsl = i;
+                break;
             }
         }
         return rsl;
