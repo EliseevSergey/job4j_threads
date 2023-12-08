@@ -19,7 +19,7 @@ public class ParallelSearch<T> extends RecursiveTask<Integer> {
     @Override
     protected Integer compute() {
         if (to - from < 10) {
-            return search(in, key, from, to);
+            return search();
         } else {
             if (from == in.length) {
                 return -1;
@@ -38,10 +38,10 @@ public class ParallelSearch<T> extends RecursiveTask<Integer> {
         }
     }
 
-    private int search(T[] array, T key, int from, int to) {
+    private int search() {
         int rsl = -1;
         for (int i = from; i <= to; i++) {
-            if (array[i].equals(key)) {
+            if (in[i].equals(key)) {
                 rsl = i;
                 break;
             }
