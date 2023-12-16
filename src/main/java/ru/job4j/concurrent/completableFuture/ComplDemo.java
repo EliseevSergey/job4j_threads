@@ -1,4 +1,4 @@
-package ru.job4j.concurrent.completablefuture;
+package ru.job4j.concurrent.completableFuture;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
