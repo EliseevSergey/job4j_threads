@@ -1,4 +1,4 @@
-package ru.job4j.pool;
+package ru.job4j.concurrent.demo;
 
 public class TwoDim {
     private static int sum(int[][] in) {
